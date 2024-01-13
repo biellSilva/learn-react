@@ -2,21 +2,21 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
-import { ISimulacraV2 } from '../../interfaces/simulacraV2'
 import { useAppContext } from '../../context/app.context'
-import { SimulacraComp } from '../../components/simulacra'
+import { IWeapon } from '../../interfaces/weapon'
+import { WeaponComp } from '../../components/weapon'
 
 
-export function SimulacraPage() {
+export function WeaponsPage() {
     const {id} = useParams()
     const {lang} = useAppContext()
-    const [response, setResponse] = useState <ISimulacraV2> (null!);
+    const [response, setResponse] = useState <IWeapon> (null!);
     const navigation = useNavigate()
 
     const [loaded, setLoading] = useState(false)
 
     useEffect(() => {
-        axios.get<ISimulacraV2>(`https://api.toweroffantasy.info/simulacra-v2/${id}?include=true&lang=${lang}`)
+        axios.get<IWeapon>(`https://api.toweroffantasy.info/weapons/${id}?include=true&lang=${lang}`)
             .then(response => {
                 setResponse(() => {
                     setLoading(true)
@@ -32,7 +32,7 @@ export function SimulacraPage() {
     
     return (
         <>
-            {loaded && <SimulacraComp data={response}/>}
+            {loaded && <WeaponComp data={response}/>}
         </>
     );
 };
